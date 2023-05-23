@@ -26,8 +26,47 @@ namespace FoodPlannerApi.Controllers
                 DayOfTheWeek = (weekDays)dayToCreate.DayOfTheWeek,
                 Week = dayToCreate.Week
             };
+           await _dayService.CreateDay(day);
 
-            return Ok();
+           return Ok();
+        }
+
+        [HttpGet]
+        [Route("getday")]
+        public Day GetDay(int id)
+        {
+	        var day = _dayService.GetDay(id);
+	        return day;
+        }
+
+        [HttpGet]
+        [Route("getalldays")]
+        public List<Day> GetAllDays()
+        {
+	        return _dayService.GetAllDays();
+        }
+
+        [HttpGet]
+        [Route("getdaysinweek")]
+        public List<Day> GetDaysInWeek(int weekid)
+        {
+	        return _dayService.GetDaysInWeek(weekid);
+        }
+
+        [HttpPost]
+        [Route("updateday")]
+        public Task UpdateDay(Day dayToUpdate)
+        {
+            _dayService.UpdateDay(dayToUpdate);
+            return Task.CompletedTask;
+        }
+
+        [HttpPost]
+        [Route("deleteday")]
+        public Task DeleteDay(int id)
+        {
+            _dayService.DeleteDay(id);
+            return Task.CompletedTask;
         }
 
         [HttpPost]

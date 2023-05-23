@@ -21,8 +21,14 @@ namespace Data.Repositories
         public async Task<Day> Create(Day _object)
         {
             var obj = _context.Add(_object);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
             return obj.Entity;
+        }
+
+        public List<Day> GetDaysInWeek(int week)
+        {
+	        var obj = _context.Days.Where(x => x.Week.Id == week);
+            return obj.ToList();
         }
 
         public void Delete(int id)
