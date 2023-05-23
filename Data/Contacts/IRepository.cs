@@ -8,10 +8,10 @@ namespace Data.Contracts
 {
     public interface IRepository < T >
     {
-        public IEnumerable<T> GetAll();
+        public List<T> GetAll();
         public Task <T> Create (T _object);
         public void Update (T _object);
-        public void Delete (T _object);
+        public void Delete (int id);
         public T GetById(int id);
 
     }

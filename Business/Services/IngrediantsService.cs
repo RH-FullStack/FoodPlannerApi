@@ -1,4 +1,5 @@
-﻿using Data.Contracts;
+﻿using Business.IService;
+using Data.Contracts;
 using Data.Models;
 using Data.Repositories;
 using System;
@@ -16,16 +17,14 @@ namespace Business.Services
         {
             _repository = repository;
         }
-        public Task<Ingrediants> CreateIngrediant(Ingrediants ingrediant, int recipeId)
+        public Task<Ingrediants> CreateIngrediant(Ingrediants ingrediant)
         {
-            return _repository.CreateIngrediant(ingrediant, recipeId);
+            return _repository.CreateIngrediant(ingrediant);
         }
 
-        public Task DeleteIngrediant(int ingrediantId)
+        public void DeleteIngrediant(int ingrediantId)
         {
-            var obj = _repository.GetAll().Where(x => x.Id == ingrediantId).FirstOrDefault();
-            _repository.Delete(obj);
-            return Task.CompletedTask;
+            _repository.Delete(ingrediantId);
         }
 
         public List<Ingrediants> GetAllIngrediantsWithRecipeId(int recipeId)

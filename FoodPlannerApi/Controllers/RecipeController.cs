@@ -1,4 +1,4 @@
-﻿using Business.Services;
+﻿using Business.IService;
 using Data.Models;
 using FoodPlannerApi.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace FoodPlannerApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/createrecipe")]
+        [Route("createrecipe")]
         public async Task<ActionResult<Recipe>> CreateRecipe(RecipeDTO recipeDTO)
         {
             var recipe = new Recipe
@@ -38,7 +38,14 @@ namespace FoodPlannerApi.Controllers
 
                 foreach (var item in recipeDTO.Ingrediants)
                 {
-                    await _ingrediantsService.CreateIngrediant(item, createdRecipe.Id);
+                    var ing = new Ingrediants()
+                    {
+                        Amount = item.Amount,
+                        MeasuringUnit = (Unit)item.MeasuringUnit,
+                        Name = item.Name,
+                        RecipeId = item.RecipeId
+                    };
+                    await _ingrediantsService.CreateIngrediant(ing);
                 }
                 return Ok(createdRecipe);
             }
@@ -47,7 +54,7 @@ namespace FoodPlannerApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/deleterecipe/{id}")]
+        [Route("deleterecipe/{id}")]
         [ProducesResponseType(typeof(RecipeDTO), 200)]
         public ActionResult<Recipe> DeleteRecipe(int id)
         {
@@ -63,7 +70,7 @@ namespace FoodPlannerApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/getrecipe/{id}")]
+        [Route("getrecipe/{id}")]
         public ActionResult<Recipe> GetRecipeAsync(int id)
         {   
             var recipe = _recipeService.GetRecipe(id);
@@ -80,7 +87,7 @@ namespace FoodPlannerApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/getallrecipe")]
+        [Route("getallrecipe")]
         public ActionResult<List<Recipe>> GetRecipes()
         {
             var recipies = _recipeService.GetAllRecipes();

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Data.Repositories
 {
@@ -27,14 +28,16 @@ namespace Data.Repositories
 
         public void Delete(Recipe _object)
         {
-            var obj = _context.Remove<Recipe>(_object);
-            if (obj != null)
-            {
-                _context.SaveChanges();
-            }
+            
         }
 
-        public IEnumerable<Recipe> GetAll()
+        public void Delete(int id)
+        {
+            _context.Remove(GetById(id));
+            _context.SaveChanges();
+        }
+
+        public List<Recipe> GetAll()
         {
             var obj = _context.Recipes.ToList();
             if (obj != null)
@@ -43,7 +46,7 @@ namespace Data.Repositories
             }
             else
             {
-                return null;
+                return new List<Recipe>();
             }
         }
 

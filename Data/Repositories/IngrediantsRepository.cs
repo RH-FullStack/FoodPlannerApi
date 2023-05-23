@@ -18,29 +18,22 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public async Task<Ingrediants> CreateIngrediant(Ingrediants _object, int recipeId)
+        public async Task<Ingrediants> CreateIngrediant(Ingrediants _object)
         {
-            _object.RecipeId = recipeId;
             var obj = _context.Add<Ingrediants>(_object);
             await _context.SaveChangesAsync();
             return obj.Entity;
         }
 
-        public Task<Ingrediants> Create(Ingrediants _object)
+        public async Task<Ingrediants> Create(Ingrediants _object)
         {
-            throw new NotImplementedException();
+            _context.Add(_object);
+            _context.SaveChanges();
+            return _object;
         }
 
-        public void Delete(Ingrediants _object)
-        {
-            var obj = _context.Remove<Ingrediants>(_object);
-            if (obj != null)
-            {
-                _context.SaveChanges();
-            }
-        }
 
-        public IEnumerable<Ingrediants> GetAll()
+        public List<Ingrediants> GetAll()
         {
             var obj = _context.Ingrediants.ToList();
             if (obj != null)
@@ -49,7 +42,7 @@ namespace Data.Repositories
             }
             else
             {
-                return null;
+                return new List<Ingrediants>();
             }
         }
 
@@ -86,6 +79,12 @@ namespace Data.Repositories
             {
                 _context.SaveChanges();
             }
+        }
+
+        public void Delete(int id)
+        {
+            _context.Remove(GetById(id));
+            _context.SaveChanges();
         }
     }
 }

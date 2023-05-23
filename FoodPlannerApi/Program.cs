@@ -1,3 +1,4 @@
+using Business.IService;
 using Business.Services;
 using Data.Contracts;
 using Data.Data;
@@ -30,8 +31,12 @@ internal class Program
         });
         builder.Services.AddScoped<RecipeRepository>();
         builder.Services.AddScoped<IngrediantsRepository>();
+        builder.Services.AddScoped<WeekRepository>();
+        builder.Services.AddScoped<DayRepository>();
         builder.Services.AddScoped<IRecipeService, RecipeService>();
         builder.Services.AddScoped<IIngrediantsService, IngrediantsService>();
+        builder.Services.AddScoped<IWeekService, WeekService>();
+        builder.Services.AddScoped<IDayService, DayService>();
 
         builder.Services.AddHttpClient();
         

@@ -8,6 +8,6 @@ namespace FoodPlannerApi.DTO
         public string? Howto { get; set; }
         public string? Picture { get; set; }
         public string? FinalProduct { get; set; }
-        public List<Ingrediants> Ingrediants { get; set; }
+        public List<IngrediantsDTO> Ingrediants { get; set; }
     }
 }
